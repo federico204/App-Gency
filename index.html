@@ -177,40 +177,230 @@
       </div>
     </section>
 
-    <!-- ==================== SCREEN 4: RESULTS ==================== -->
+    <!-- ==================== SCREEN 4: RESULTS (ENHANCED) ==================== -->
     <section id="screen-results" class="screen">
-      <div class="results-top">
-        <button class="back-btn" id="btn-back-results" onclick="navigateTo('screen-symptoms')" aria-label="Volver">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        </button>
-      </div>
+      <div class="results-content results-content--new">
+        <h2 class="results-title results-title--new">Resultados de tu evaluación</h2>
 
-      <div class="results-content">
-        <h2 class="results-title">Resultados de tu evaluación</h2>
-
-        <div class="results-card">
+        <!-- AI Rating Card -->
+        <div class="results-card results-card--new">
           <h3 class="results-card__header">Calificación IA</h3>
           <div class="results-card__urgency">
             <span class="results-card__label">Nivel Urgencia:</span>
-            <span class="results-card__badge results-card__badge--media" id="urgency-badge">MEDIA</span>
+            <span class="results-card__badge results-card__badge--alta" id="urgency-badge">ALTA</span>
           </div>
-          <p class="results-card__recommendation" id="recommendation-text">Basado en tus síntomas, recomendamos atención en las próximas 2 horas</p>
+          <p class="results-card__recommendation" id="recommendation-text">Basado en tus síntomas, recomendamos atención en las próximas 10 minutos</p>
         </div>
 
-        <p class="results-promo">¿Quieres ir un paso más allá? Con una suscripción puedes solicitar tu turno, ver el hospital más cercano con menor espera y guardar tu historial de consultas.</p>
+        <!-- Hospital Card -->
+        <div class="results-hospital-card">
+          <p class="results-hospital-card__label">Hospital seleccionado:</p>
+          <h3 class="results-hospital-card__name">Hospital San Ignacio</h3>
+          <p class="results-hospital-card__info">Tiempo de espera estimado: 5 min</p>
+          <p class="results-hospital-card__info">Personas en fila: 1</p>
+        </div>
 
-        <button id="btn-create-account" class="btn-outline" onclick="navigateTo('screen-login')">Crear Cuenta</button>
+        <!-- Action buttons -->
+        <button id="btn-solicitar-turno" class="btn-solicitar" onclick="handleSolicitarTurno()">SOLICITAR TURNO</button>
+        <button id="btn-modificar-info" class="btn-modificar" onclick="navigateTo('screen-symptoms')">← Modificar información</button>
+        <a href="#" id="link-volver-evaluar" class="link-underline link-volver" onclick="event.preventDefault(); navigateTo('screen-home')">Volver a evaluar</a>
+      </div>
+    </section>
 
-        <a href="#" id="link-continue-no-register" class="link-underline" onclick="event.preventDefault(); navigateTo('screen-home')">Continuar sin registrarse</a>
+    <!-- ==================== SCREEN 5: DASHBOARD ==================== -->
+    <section id="screen-dashboard" class="screen">
+      <!-- Header -->
+      <div class="dash-header">
+        <div class="dash-header__logo">
+          <img src="logo.png" alt="Gency" class="dash-logo-img">
+        </div>
+        <button class="dash-menu-btn" id="btn-menu" onclick="toggleTurnosPanel()" aria-label="Menú">
+          <span class="dash-menu-btn__line"></span>
+          <span class="dash-menu-btn__line"></span>
+          <span class="dash-menu-btn__line"></span>
+        </button>
       </div>
 
-      <div class="results-nav">
-        <button class="nav-arrow" id="btn-prev-result" onclick="navigateTo('screen-symptoms')" aria-label="Anterior">
+      <!-- Body -->
+      <div class="dash-body">
+        <h1 class="dash-greeting">Hola, Usuario.</h1>
+
+        <!-- Recent Consultation -->
+        <button class="dash-recent-pill" onclick="showToast('Abriendo consulta reciente...')">
+          Consulta Reciente - "Siento un dolor de __"
+        </button>
+
+        <!-- Chat Preview Card -->
+        <div class="dash-chat-card">
+          <div class="dash-chat-card__user">
+            <span class="dash-chat-card__user-msg">Mis síntomas son....</span>
+            <div class="dash-chat-card__avatar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+          </div>
+          <div class="dash-chat-card__ai">
+            <div class="dash-chat-card__ai-logo">
+              <img src="logo.png" alt="Gency AI" class="dash-chat-ai-img">
+            </div>
+            <p class="dash-chat-card__ai-msg">¡Claro! Te recomiendo asistir a ___ , dados tus síntomas actuales puedo deducir que ___ por lo cual deberías ___</p>
+          </div>
+        </div>
+
+        <!-- Consultar Urgencia Button -->
+        <button id="btn-consultar-urgencia" class="btn-consultar-urgencia" onclick="navigateTo('screen-symptoms')">CONSULTAR URGENCIA</button>
+
+        <!-- Cards Grid -->
+        <div class="dash-cards-grid">
+          <button class="dash-feature-card" id="btn-hospitales" onclick="navigateTo('screen-hospitals')">
+            <img src="hospital_icon.png" alt="Hospitales" class="dash-feature-card__img">
+            <span class="dash-feature-card__label">Hospitales Cercanos</span>
+          </button>
+          <button class="dash-feature-card" id="btn-turnos" onclick="navigateTo('screen-turnos')">
+            <img src="turnos_icon.png" alt="Mis Turnos" class="dash-feature-card__img">
+            <span class="dash-feature-card__label">Mis Turnos Previos</span>
+          </button>
+        </div>
+
+        <!-- Como funciona -->
+        <button class="dash-info-link" onclick="showToast('Función próximamente')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          ¿Como funciona?
+        </button>
+      </div>
+
+      <!-- Bottom Navigation -->
+      <nav class="bottom-nav">
+        <button class="bottom-nav__item bottom-nav__item--active" id="nav-home" onclick="setNavActive('nav-home')" aria-label="Inicio">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+        </button>
+        <button class="bottom-nav__item" id="nav-chat" onclick="setNavActive('nav-chat'); navigateTo('screen-symptoms')" aria-label="Chat">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+        </button>
+        <button class="bottom-nav__item" id="nav-profile" onclick="setNavActive('nav-profile'); showToast('Perfil próximamente')" aria-label="Perfil">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+      </nav>
+
+      <!-- Turnos Slide Panel -->
+      <div class="turnos-panel" id="turnos-panel">
+        <div class="turnos-panel__inner">
+          <button class="turnos-panel__close" onclick="toggleTurnosPanel()" aria-label="Cerrar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <button class="btn-nueva-consulta" onclick="toggleTurnosPanel(); navigateTo('screen-symptoms')">
+            (+) Nueva Consulta
+          </button>
+          <h2 class="turnos-panel__title">Recientes</h2>
+          <div class="turnos-panel__list">
+            <button class="turno-item" onclick="showToast('Abriendo: Tos Leve')">Tos Leve - 11/05/2026</button>
+            <button class="turno-item" onclick="showToast('Abriendo: Herida infectada')">Herida infectada - 03/05/2026</button>
+            <button class="turno-item" onclick="showToast('Abriendo: Problema de piel')">Problema de piel - 22/02/2026</button>
+          </div>
+        </div>
+      </div>
+      <div class="turnos-overlay" id="turnos-overlay" onclick="toggleTurnosPanel()"></div>
+    </section>
+
+    <!-- ==================== SCREEN 6: HOSPITALES CERCANOS ==================== -->
+    <section id="screen-hospitals" class="screen">
+      <div class="hosp-header">
+        <button class="hosp-back-btn" onclick="navigateTo('screen-dashboard')" aria-label="Volver">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
-        <button class="nav-arrow" id="btn-next-result" onclick="navigateTo('screen-home')" aria-label="Siguiente">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      <div class="hosp-body">
+        <!-- Search bar -->
+        <div class="hosp-search-container">
+          <input type="text" class="hosp-search" id="hosp-search-input" placeholder="Consultar..." oninput="filterHospitals(this.value)">
+        </div>
+
+        <h2 class="hosp-section-title">Hospitales Cercanos</h2>
+
+        <!-- Hospital Cards -->
+        <div class="hosp-list" id="hosp-list">
+
+          <!-- Hospital San Ignacio -->
+          <div class="hosp-card" id="hosp-card-1">
+            <div class="hosp-card__top">
+              <h3 class="hosp-card__name">Hospital San Ignacio</h3>
+            </div>
+            <div class="hosp-card__content">
+              <img src="hospital_san_ignacio.png" alt="Hospital San Ignacio" class="hosp-card__img">
+              <div class="hosp-card__info">
+                <p class="hosp-card__address">Carrera 7 # 40-62<br>Bogotá, Colombia</p>
+                <p class="hosp-card__desc">El Hospital Universitario San Ignacio es un hospital universitario de cuarto nivel ubicado en la ciudad de Bogotá, Colombia, dentro del campus de la Pontificia Universidad Javeriana y alberga las facultades de Medicina, Enfermería y Odontología de esta escuela.</p>
+              </div>
+            </div>
+            <div class="hosp-card__times">
+              <div class="hosp-card__time-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+                15 - 20 Mins
+              </div>
+              <div class="hosp-card__time-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                5 - 2 Mins
+              </div>
+            </div>
+          </div>
+
+          <!-- Clínica de Marly -->
+          <div class="hosp-card" id="hosp-card-2">
+            <div class="hosp-card__top">
+              <h3 class="hosp-card__name">Clínica de Marly</h3>
+            </div>
+            <div class="hosp-card__content hosp-card__content--no-img">
+              <div class="hosp-card__info">
+                <p class="hosp-card__address">Calle 50 # 9-67<br>Bogotá, Colombia</p>
+                <p class="hosp-card__desc">La Clínica de Marly es la institución privada de salud más antigua de Colombia, fundada en 1903. Es reconocida como un centro de alta complejidad y excelencia científica, ubicado en el sector de Chapinero.</p>
+              </div>
+            </div>
+            <div class="hosp-card__times">
+              <div class="hosp-card__time-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+                40 - 50 Mins
+              </div>
+              <div class="hosp-card__time-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                15 - 20 Mins
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Navigation Arrows -->
+        <div class="hosp-nav-arrows">
+          <button class="hosp-arrow-btn" id="hosp-prev" onclick="scrollHospitals(-1)" aria-label="Anterior">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <button class="hosp-arrow-btn" id="hosp-next" onclick="scrollHospitals(1)" aria-label="Siguiente">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SCREEN 7: MIS TURNOS ==================== -->
+    <section id="screen-turnos" class="screen screen--turnos">
+      <div class="turnos-screen">
+        <button class="turnos-screen__back" onclick="navigateTo('screen-dashboard')" aria-label="Volver">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
+
+        <div class="turnos-screen__content">
+          <button class="btn-nueva-consulta" onclick="navigateTo('screen-symptoms')">
+            (+) Nueva Consulta
+          </button>
+
+          <h2 class="turnos-screen__title">Recientes</h2>
+
+          <div class="turnos-screen__list">
+            <button class="turno-item" onclick="showToast('Abriendo: Tos Leve')">Tos Leve - 11/05/2026</button>
+            <button class="turno-item" onclick="showToast('Abriendo: Herida infectada')">Herida infectada - 03/05/2026</button>
+            <button class="turno-item" onclick="showToast('Abriendo: Problema de piel')">Problema de piel - 22/02/2026</button>
+          </div>
+        </div>
       </div>
     </section>
 
