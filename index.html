@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Gency - Triage Inteligente | Decide a tiempo, cuida mejor</title>
+  <meta name="description" content="Gency es tu asistente de triage inteligente. Evalúa tus síntomas y recibe una calificación de urgencia basada en inteligencia artificial.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+
+    <!-- ==================== SCREEN 1: HOME ==================== -->
+    <section id="screen-home" class="screen screen--active">
+      <div class="home-header">
+        <div class="home-header__content">
+          <div class="logo-container">
+            <img src="logo principal.png" alt="Gency - Triage Inteligente" class="logo-full-img">
+          </div>
+          <h1 class="home-header__title">¿No sabes si ir a urgencias?</h1>
+        </div>
+        <div class="home-header__wave">
+          <svg viewBox="0 0 500 100" preserveAspectRatio="none">
+            <path d="M0,0 C125,90 375,10 500,70 L500,100 L0,100 Z" fill="var(--mint-bg)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="home-body">
+        <div class="home-body__spacer"></div>
+        <button id="btn-start-eval" class="btn-primary btn-primary--large" onclick="navigateTo('screen-symptoms')">
+          <span>Iniciar evaluación</span>
+        </button>
+        <div class="home-body__spacer"></div>
+        <a href="#" id="btn-login-link" class="link-underline link-underline--dark" onclick="event.preventDefault(); navigateTo('screen-login')">Iniciar Sesion</a>
+        <div class="home-body__bottom-space"></div>
+      </div>
+    </section>
+
+    <!-- ==================== SCREEN 2: LOGIN ==================== -->
+    <section id="screen-login" class="screen">
+      <div class="login-header-bg"></div>
+      <div class="login-content">
+        <h2 class="login-title">Login</h2>
+        <p class="login-subtitle">Inicia sesión para continuar</p>
+
+        <form id="login-form" class="login-form" onsubmit="event.preventDefault(); handleLogin()">
+          <div class="input-group">
+            <input type="email" id="input-email" class="input-field" placeholder="Email" required autocomplete="email">
+          </div>
+          <div class="input-group">
+            <input type="password" id="input-password" class="input-field" placeholder="Contraseña" required autocomplete="current-password">
+          </div>
+          <button type="submit" id="btn-login" class="btn-dark">Iniciar Sesión</button>
+        </form>
+
+        <div class="login-divider">
+          <span class="login-divider__line"></span>
+          <span class="login-divider__text">o</span>
+          <span class="login-divider__line"></span>
+        </div>
+
+        <div class="social-login">
+          <button id="btn-google" class="social-btn" aria-label="Iniciar sesión con Google">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+          </button>
+          <button id="btn-facebook" class="social-btn" aria-label="Iniciar sesión con Facebook">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2"/>
+            </svg>
+          </button>
+          <button id="btn-apple" class="social-btn" aria-label="Iniciar sesión con Apple">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="#000"/>
+            </svg>
+          </button>
+        </div>
+
+        <p class="login-register">¿Usuario nuevo? <a href="#" id="link-register" onclick="event.preventDefault(); showToast('Registro próximamente')"><strong>Crea una cuenta</strong></a></p>
+      </div>
+
+      <button class="back-btn back-btn--bottom" onclick="navigateTo('screen-home')" aria-label="Volver">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Volver</span>
+      </button>
+    </section>
+
+    <!-- ==================== SCREEN 3: SYMPTOMS ==================== -->
+    <section id="screen-symptoms" class="screen">
+      <div class="symptoms-hero">
+        <div class="symptoms-hero__card">
+          <img src="logo.png" alt="Gency logo" class="symptoms-hero__logo symptoms-hero__logo--img">
+          <h2 class="symptoms-hero__title">Cuéntanos tus síntomas.</h2>
+        </div>
+      </div>
+
+      <div class="symptoms-list" id="symptoms-list">
+        <label class="symptom-item" id="symptom-fiebre">
+          <input type="checkbox" class="symptom-checkbox" data-symptom="fiebre">
+          <span class="symptom-checkmark"></span>
+          <span class="symptom-text">Siento una fiebre elevada.</span>
+        </label>
+
+        <label class="symptom-item" id="symptom-vomito">
+          <input type="checkbox" class="symptom-checkbox" data-symptom="vomito">
+          <span class="symptom-checkmark"></span>
+          <span class="symptom-text">En los últimos minutos he vomitado.</span>
+        </label>
+
+        <label class="symptom-item" id="symptom-respirar">
+          <input type="checkbox" class="symptom-checkbox" data-symptom="respirar">
+          <span class="symptom-checkmark"></span>
+          <span class="symptom-text">Siento dificultad para respirar.</span>
+        </label>
+
+        <div class="symptom-item symptom-item--expandable" id="symptom-dolor">
+          <label class="symptom-item__header">
+            <input type="checkbox" class="symptom-checkbox" data-symptom="dolor" id="checkbox-dolor">
+            <span class="symptom-checkmark"></span>
+            <span class="symptom-text">Siento dolor.</span>
+            <span class="symptom-intensity-label">Intensidad</span>
+          </label>
+          <div class="symptom-subitems" id="dolor-subitems">
+            <label class="symptom-subitem" id="dolor-pecho">
+              <input type="radio" name="dolor-location" class="symptom-radio" value="pecho">
+              <span class="symptom-radio-mark"></span>
+              <span class="symptom-text">En el pecho</span>
+              <button class="intensity-btn" onclick="event.preventDefault(); toggleIntensity(this)" aria-label="Seleccionar intensidad">···</button>
+            </label>
+            <label class="symptom-subitem" id="dolor-cabeza">
+              <input type="radio" name="dolor-location" class="symptom-radio" value="cabeza">
+              <span class="symptom-radio-mark"></span>
+              <span class="symptom-text">En la cabeza</span>
+              <button class="intensity-btn" onclick="event.preventDefault(); toggleIntensity(this)" aria-label="Seleccionar intensidad">···</button>
+            </label>
+            <label class="symptom-subitem" id="dolor-estomago">
+              <input type="radio" name="dolor-location" class="symptom-radio" value="estomago">
+              <span class="symptom-radio-mark"></span>
+              <span class="symptom-text">En el estómago</span>
+              <button class="intensity-btn" onclick="event.preventDefault(); toggleIntensity(this)" aria-label="Seleccionar intensidad">···</button>
+            </label>
+          </div>
+        </div>
+
+        <label class="symptom-item" id="symptom-mareado">
+          <input type="checkbox" class="symptom-checkbox" data-symptom="mareado">
+          <span class="symptom-checkmark"></span>
+          <span class="symptom-text">Me siento mareado.</span>
+        </label>
+
+        <label class="symptom-item" id="symptom-debilidad">
+          <input type="checkbox" class="symptom-checkbox" data-symptom="debilidad">
+          <span class="symptom-checkmark"></span>
+          <span class="symptom-text">Siento debilidad general.</span>
+        </label>
+      </div>
+
+      <div class="symptoms-chat-bar">
+        <div class="chat-input-container">
+          <input type="text" id="chat-input" class="chat-input" placeholder="Consulta con Gency...">
+          <button id="btn-attach" class="chat-icon-btn" aria-label="Adjuntar archivo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+          </button>
+          <button id="btn-mic" class="chat-icon-btn" aria-label="Grabar voz">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+        </div>
+        <button id="btn-consultar" class="btn-consult" onclick="handleConsultar()">CONSULTAR</button>
+      </div>
+    </section>
+
+    <!-- ==================== SCREEN 4: RESULTS ==================== -->
+    <section id="screen-results" class="screen">
+      <div class="results-top">
+        <button class="back-btn" id="btn-back-results" onclick="navigateTo('screen-symptoms')" aria-label="Volver">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+      </div>
+
+      <div class="results-content">
+        <h2 class="results-title">Resultados de tu evaluación</h2>
+
+        <div class="results-card">
+          <h3 class="results-card__header">Calificación IA</h3>
+          <div class="results-card__urgency">
+            <span class="results-card__label">Nivel Urgencia:</span>
+            <span class="results-card__badge results-card__badge--media" id="urgency-badge">MEDIA</span>
+          </div>
+          <p class="results-card__recommendation" id="recommendation-text">Basado en tus síntomas, recomendamos atención en las próximas 2 horas</p>
+        </div>
+
+        <p class="results-promo">¿Quieres ir un paso más allá? Con una suscripción puedes solicitar tu turno, ver el hospital más cercano con menor espera y guardar tu historial de consultas.</p>
+
+        <button id="btn-create-account" class="btn-outline" onclick="navigateTo('screen-login')">Crear Cuenta</button>
+
+        <a href="#" id="link-continue-no-register" class="link-underline" onclick="event.preventDefault(); navigateTo('screen-home')">Continuar sin registrarse</a>
+      </div>
+
+      <div class="results-nav">
+        <button class="nav-arrow" id="btn-prev-result" onclick="navigateTo('screen-symptoms')" aria-label="Anterior">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <button class="nav-arrow" id="btn-next-result" onclick="navigateTo('screen-home')" aria-label="Siguiente">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast" role="alert"></div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+        <p class="loading-text">Analizando síntomas...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
