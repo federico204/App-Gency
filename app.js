@@ -44,10 +44,10 @@ function navigateTo(screenId) {
   if (!next || screenId === appState.currentScreen) return;
 
   // Determine slide direction
-  const screens = ['screen-home', 'screen-login', 'screen-symptoms', 'screen-results'];
+  const screens = ['screen-home', 'screen-login', 'screen-dashboard', 'screen-symptoms', 'screen-results', 'screen-hospitals', 'screen-turnos'];
   const fromIdx = screens.indexOf(appState.currentScreen);
   const toIdx   = screens.indexOf(screenId);
-  const goingForward = toIdx > fromIdx;
+  const goingForward = toIdx >= fromIdx;
 
   // Exit current screen
   current.classList.remove('screen--active');
@@ -103,11 +103,18 @@ function onScreenEnter(screenId) {
     case 'screen-home':
       resetHomeAnimations();
       break;
+    case 'screen-dashboard':
+      resetNavActive();
+      setNavActive('nav-home');
+      break;
     case 'screen-symptoms':
       resetSymptomsScreen();
       break;
     case 'screen-results':
       renderResults();
+      break;
+    case 'screen-hospitals':
+      animateHospitalCards();
       break;
     default:
       break;
@@ -152,7 +159,7 @@ function handleLogin() {
   setTimeout(() => {
     hideLoading();
     showToast('¡Bienvenido a Gency! 👋');
-    setTimeout(() => navigateTo('screen-symptoms'), 600);
+    setTimeout(() => navigateTo('screen-dashboard'), 600);
   }, 1500);
 }
 
@@ -360,6 +367,92 @@ function renderResults() {
     void card.offsetHeight;
     card.style.animation = 'slideInUp 0.6s ease both';
   }
+}
+
+// ─────────────────────────────────────────────
+// SOLICITAR TURNO
+// ─────────────────────────────────────────────
+function handleSolicitarTurno() {
+  showLoading('Reservando turno...');
+  setTimeout(() => {
+    hideLoading();
+    showToast('✅ Turno solicitado en Hospital San Ignacio');
+    setTimeout(() => navigateTo('screen-dashboard'), 1200);
+  }, 1800);
+}
+
+// ─────────────────────────────────────────────
+// DASHBOARD FUNCTIONS
+// ─────────────────────────────────────────────
+function setNavActive(navId) {
+  document.querySelectorAll('.bottom-nav__item').forEach(btn => {
+    btn.classList.remove('bottom-nav__item--active');
+  });
+  const active = document.getElementById(navId);
+  if (active) active.classList.add('bottom-nav__item--active');
+}
+
+function resetNavActive() {
+  document.querySelectorAll('.bottom-nav__item').forEach(btn => {
+    btn.classList.remove('bottom-nav__item--active');
+  });
+}
+
+// ─────────────────────────────────────────────
+// TURNOS SLIDE PANEL
+// ─────────────────────────────────────────────
+function toggleTurnosPanel() {
+  const panel   = document.getElementById('turnos-panel');
+  const overlay = document.getElementById('turnos-overlay');
+  if (!panel || !overlay) return;
+
+  const isOpen = panel.classList.contains('turnos-panel--open');
+  if (isOpen) {
+    panel.classList.remove('turnos-panel--open');
+    overlay.classList.remove('turnos-overlay--visible');
+  } else {
+    panel.classList.add('turnos-panel--open');
+    overlay.classList.add('turnos-overlay--visible');
+  }
+}
+
+// ─────────────────────────────────────────────
+// HOSPITALS SCREEN
+// ─────────────────────────────────────────────
+function animateHospitalCards() {
+  const cards = document.querySelectorAll('.hosp-card');
+  cards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 80 + i * 100);
+  });
+}
+
+function filterHospitals(query) {
+  const cards = document.querySelectorAll('.hosp-card');
+  const q = query.toLowerCase().trim();
+  cards.forEach(card => {
+    const name = card.querySelector('.hosp-card__name')?.textContent.toLowerCase() || '';
+    const addr = card.querySelector('.hosp-card__address')?.textContent.toLowerCase() || '';
+    if (!q || name.includes(q) || addr.includes(q)) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+let hospScrollIndex = 0;
+function scrollHospitals(dir) {
+  const list = document.getElementById('hosp-list');
+  if (!list) return;
+  const cards = list.querySelectorAll('.hosp-card');
+  hospScrollIndex = Math.max(0, Math.min(cards.length - 1, hospScrollIndex + dir));
+  cards[hospScrollIndex]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // ─────────────────────────────────────────────
